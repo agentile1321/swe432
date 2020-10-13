@@ -93,7 +93,7 @@ public class PersistenceFile extends HttpServlet{
        printTail(out);
      }else{
        printHead(out);
-       printBody(out, name, age, error);
+       printBody(out, name, age, pet, error);
        printTail(out);
      }
   }
