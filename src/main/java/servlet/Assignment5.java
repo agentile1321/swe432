@@ -40,6 +40,20 @@ public class Assignment5 extends HttpServlet{
 		String logicalOperation = request.getParameter(Data.LOGICALOPERATION.name());
 		//"A & B"
 		
+		
+		//Parse it into a structure that separates boolean variables and logical operators
+		var arrayVars = logicalOperation.split(" "); //split by space "A & B -> [A,&,B]"
+		var arrayOps = [];
+		// var opIndex = array.indexOf("&") //get index of operators
+		//get & into its own array
+		// opIndex > -1 ? array.splice(myIndex, 1) : false //removes & from array
+		
+		
+		//print the predicate they enetered
+		
+		//Print a complete truth table for the predicate, including a column with the result for each row
+		//for loop for table size look online
+		
 		//Echo the predicate to the user
 		response.setContentType("text/html");
 		PrintWriter writer = response.getWriter();
