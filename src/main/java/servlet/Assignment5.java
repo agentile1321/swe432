@@ -55,6 +55,13 @@ public class Assignment5 extends HttpServlet{
 			}	
 		}
 		
+		//remove nulls from arrayVars
+		arrayVars.removeAll(Collections.singleton(null));
+		
+		//now we have two array lists {A, B} and {&}
+		
+		
+		
 		
 		// var opIndex = array.indexOf("&") //get index of operators
 		//get & into its own array
