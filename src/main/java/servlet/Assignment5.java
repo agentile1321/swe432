@@ -2,6 +2,7 @@
 import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.*;
+import java.lang.Math;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -38,34 +39,36 @@ public class Assignment5 extends HttpServlet{
 	   throws ServletException, IOException
 	{
 		//get vars
-		String logicalOperation = request.getParameter(Data.LOGICALOPERATION.name());
-		//"A & B"
-		
+		String logicalOperation = request.getParameter(Data.LOGICALOPERATION.name()); //"A & B"
 		
 		//Parse it into a structure that separates boolean variables and logical operators
 		ArrayList legalOps = new ArrayList(Arrays.asList("&&", "AND", "&", "^", "||", "|", "OR", "V", "~", "NOT", "!", "==", "=", "EQUAL"));
 		ArrayList arrayVars = new ArrayList(Arrays.asList(logicalOperation.split(" "))); //split by space "A & B -> [A,&,B]"
 		ArrayList arrayOps = new ArrayList();
+		boolean makeTable = true;
+		int length = 0;
+		int width = 0;
 		
 		//loop through predicate to seperate operations
 		for(int i = 0; i< arrayVars.size(); i++){
 			if(legalOps.contains(arrayVars.get(i))){
 				arrayOps.add(arrayVars.get(i));
-				arrayVars.set(i, null);
+				arrayVars.set(i, null); //set to null instead of removing to avoid indexing errors in the loop
 			}	
 		}
 		
 		//remove nulls from arrayVars
-		arrayVars.removeAll(Collections.singleton(null));
-		
-		//now we have two array lists {A, B} and {&}
+		arrayVars.removeAll(Collections.singleton(null)); //now we have two array lists {A, B} and {&}
 		
 		
+		//check if invalid
+		if (arrayOps.size() == 0){
+			makeTable = false; //if maketable is false print out message (invalid predicate)
+		}
 		
-		
-		// var opIndex = array.indexOf("&") //get index of operators
-		//get & into its own array
-		// opIndex > -1 ? array.splice(myIndex, 1) : false //removes & from array
+		//get table dimensions
+		length = Math.pow(2, arrayVars.size());
+		width = arrayVars.size();
 		
 		
 		//print the predicate they enetered
@@ -82,6 +85,20 @@ public class Assignment5 extends HttpServlet{
 			.append("<html>")
 			.append("	<center>You typed: " + logicalOperation + "</center>")
 			.append("</html>");
+		
+		
+		
+		
+		for (int i=0; i<length; i++) {
+			for (int j=n-1; j>=0; j--) {
+				writer.append("<center>" + (i/(int) Math.pow(2, j))%2 + "  " + "</center>");
+			}
+			//System.out.println();
+		}
+
+		
+		
+		
 		PrintResponseBodyEnd(writer);
 		
 	
