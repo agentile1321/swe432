@@ -122,7 +122,7 @@ public class assignment5 extends HttpServlet{
 		out.println("    </ul>");
 		out.println("    <br />    <br />    <br />");
 		out.println("");
-		out.println("    <form method=\"post\" action=\"\assignment5\">");
+		out.println("    <form method=\"post\" action=\"\\assignment5\">");
 		out.println("        <center>");
 		out.println("            <label for=\"logicalOperation\">Enter Logical Operation:</label>");
 		out.println("            <input type=\"text\" id=\"logicalOperation\" name=\"logicalOperation\"><br><br>");
