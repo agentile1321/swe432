@@ -48,7 +48,7 @@ public class Assignment5 extends HttpServlet{
 		ArrayList arrayOps = new ArrayList();
 		
 		//loop through predicate to seperate operations
-		for(int i = 0; i< arrayVars.length(); i++){
+		for(int i = 0; i< arrayVars.size(); i++){
 			if(legalOps.contains(arrayVars.get(i))){
 				arrayOps.add(arrayVars.get(i));
 				arrayVars.set(i, null);
