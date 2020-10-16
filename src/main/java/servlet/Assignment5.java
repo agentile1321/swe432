@@ -48,10 +48,12 @@ public class Assignment5 extends HttpServlet{
 		ArrayList arrayOps = new ArrayList();
 		
 		//loop through predicate to seperate operations
-// 		for(val:arrayVars){
-			
-			
-// 		}
+		for(int i = 0; i< arrayVars.length(); i++){
+			if(legalOps.contains(arrayVars.get(i))){
+				arrayOps.add(arrayVars.get(i));
+				arrayVars.set(i, null);
+			}	
+		}
 		
 		
 		// var opIndex = array.indexOf("&") //get index of operators
