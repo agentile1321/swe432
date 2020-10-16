@@ -43,10 +43,13 @@ public class Assignment5 extends HttpServlet{
 		//Echo the predicate to the user
 		response.setContentType("text/html");
 		PrintWriter writer = response.getWriter();
+		PrintHead(writer);
+ 		PrintResponseBody(writer);
 		writer.append("<!DOCTYPE html>")
 			.append("<html>")
 			.append("	<p>You typed: " + logicalOperation + "</p>")
 			.append("</html>");
+		PrintResponseBodyEnd(writer);
 		
 	
 		//Parse it into a structure that separates boolean variables and logical operators
@@ -164,5 +167,54 @@ public class Assignment5 extends HttpServlet{
 	   out.println("");
 	   out.println("</html>");
 	} // End PrintTail
+	
+	
+	
+	
+	private void PrintResponseBody (PrintWriter out, String lhs, String rhs, String rslt)
+	{
+		out.println("<body>");
+		out.println("    <h1><center>Predicate Logic Calculator</center></h1>");
+		out.println("    <h2><center>Sonal Kumar * Angela Gentile * George Terziysky * SWE-432-001</center>  </h2>");
+		out.println("	 <h3><center>Formatting/Syntax Instructions:</center></h3>");
+		out.println("    <h4><center>In order to calculate the final value of the logical operation, type in the predicate with the following constraints:</center></h4>");
+		out.println("");
+		out.println("    <ul>");
+		out.println("        <li>The entry should be typed in the format of (TRUE/FALSE)(LOGICAL OPERATOR)(TRUE/FALSE)</li>");
+		out.println("        <li>");
+		out.println("            The entry can also be an extention of the format described above. There can be multiple True/False statements with logical operations in between them. For example, you can enter");
+		out.println("            \"TRUE OR FALSE\",which would give you TRUE, and you could also enter \"FALSE AND(FALSE AND TRUE)\", which would result in False.");
+		out.println("        </li>");
+		out.println("    </ul>");
+		out.println("    <h4><center>Options for supported logical symbols:</center></h4>");
+		out.println("    <ul>");
+		out.println("        <li>Supported symbols for AND: \"&&\", \"AND\", \"&\", \"^\"</li>");
+		out.println("        <li>Supported symbols for OR: \"||\", \"|\", OR, \"V\" </li>");
+		out.println("        <li>Supported symbols for NOT: \"~\", \"NOT\", \"!\"</li>");
+		out.println("        <li>Supported symbols for EQUAL: \"==\", \"=\", \"EQUAL\"</li>");
+		out.println("    </ul>");
+		out.println("    <br />    <br />    <br />");
+		out.println("");
+		out.println("    <form method=\"post\" action=\"\\assignment5\">");
+		out.println("        <center>");
+		out.println("            <label for=\"logicalOperation\">Enter Logical Operation:</label>");
+		out.println("            <input type=\"text\" id=\"logicalOperation\" name=\"LOGICALOPERATION\"><br><br>");
+		out.println("            <input type=\"submit\" value=\"Submit\" style=\"background-color: #80ced6\">");
+		out.println("        </center>");
+		out.println("    </form>");
+		
+	}
+	
+	
+	private void PrintResponseBodyEnd (PrintWriter out, String lhs, String rhs, String rslt){
+		
+		out.println("</body>");
+		out.println("");
+		
+	}
+	
+	
+	
+	
 
 }
