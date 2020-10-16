@@ -38,6 +38,11 @@ public class Assignment5 extends HttpServlet{
 	public void doPost (HttpServletRequest request, HttpServletResponse response)
 	   throws ServletException, IOException
 	{
+		//THINGS NEED TO BE DONE
+		//COMPETION OF TRUTH TABLE
+		//CHECK FOR VALID INPUT PREDICATE AND PRINT MESSAGE TO USER
+		
+		
 		//get vars
 		String logicalOperation = request.getParameter(Data.LOGICALOPERATION.name()); //"A & B"
 		
@@ -85,14 +90,17 @@ public class Assignment5 extends HttpServlet{
 			.append("<html>")
 			.append("	<center>You typed: " + logicalOperation + "</center>")
 			.append("</html>");
+						
 		
-		
-		
-		
+		//IF BOOL MAKETABLE TRUE DO THIS
 		for (int i=0; i<length; i++) {
 			writer.append("<center>");
-			for (int j=width-1; j>=0; j--) {
-				writer.append("| " +  (i/(int) Math.pow(2, j))%2 + " |");
+			for (int j=width; j>=0; j--) {
+// 				if(j == 0){
+// 					writer.append("| " +  (i/(int) Math.pow(2, j))%2);
+// 					continue;
+// 				}
+				writer.append("| " +  (i/(int) Math.pow(2, j))%2);
 			}
 			//System.out.println();
 			writer.append("</center>");
