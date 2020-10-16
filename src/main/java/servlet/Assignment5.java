@@ -90,7 +90,7 @@ public class Assignment5 extends HttpServlet{
 		
 		
 		for (int i=0; i<length; i++) {
-			for (int j=n-1; j>=0; j--) {
+			for (int j=width-1; j>=0; j--) {
 				writer.append("<center>" + (i/(int) Math.pow(2, j))%2 + "  " + "</center>");
 			}
 			//System.out.println();
