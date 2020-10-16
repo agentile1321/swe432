@@ -44,7 +44,7 @@ public class Assignment5 extends HttpServlet{
 		
 		//Parse it into a structure that separates boolean variables and logical operators
 		String[] legalOps = {"&&", "AND", "&", "^", "||", "|", "OR", "V", "~", "NOT", "!", "==", "=", "EQUAL"};
-		ArrayList arrayVars = Arrays.asList(logicalOperation.split(" ")); //split by space "A & B -> [A,&,B]"
+		ArrayList arrayVars = new ArrayList(Arrays.asList(logicalOperation.split(" "))); //split by space "A & B -> [A,&,B]"
 		ArrayList arrayOps = new ArrayList();
 		
 		//loop through predicate to seperate operations
