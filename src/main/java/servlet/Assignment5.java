@@ -206,7 +206,7 @@ public class Assignment5 extends HttpServlet{
 	}
 	
 	
-	private void PrintResponseBodyEnd (PrintWriter out, String lhs, String rhs, String rslt){
+	private void PrintResponseBodyEnd (PrintWriter out){
 		
 		out.println("</body>");
 		out.println("");
