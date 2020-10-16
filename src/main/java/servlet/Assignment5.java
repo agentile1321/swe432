@@ -67,7 +67,7 @@ public class Assignment5 extends HttpServlet{
 		}
 		
 		//get table dimensions
-		length = Math.pow(2, arrayVars.size());
+		length = (int) Math.pow(2, arrayVars.size());
 		width = arrayVars.size();
 		
 		
