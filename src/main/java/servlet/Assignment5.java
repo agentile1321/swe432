@@ -47,7 +47,7 @@ public class Assignment5 extends HttpServlet{
  		PrintResponseBody(writer);
 		writer.append("<!DOCTYPE html>")
 			.append("<html>")
-			.append("	<p>You typed: " + logicalOperation + "</p>")
+			.append("	<center>You typed: " + logicalOperation + "</center>")
 			.append("</html>");
 		PrintResponseBodyEnd(writer);
 		
