@@ -14,6 +14,8 @@ import javax.servlet.annotation.WebServlet;
 @WebServlet( name = "assignment5", urlPatterns = {"/assignment5"} )
 
 public class Assignment5 extends HttpServlet{
+	static enum Data {LOGICALOPERATION};
+	
 	// Location of servlet.
 	static String Domain  = "";
 	static String Path    = "";
@@ -35,7 +37,17 @@ public class Assignment5 extends HttpServlet{
 	   throws ServletException, IOException
 	{
 		//get vars
-		//String logicalOperation = request.getParameter(Data.logicalOperation.name());
+		String logicalOperation = request.getParameter(Data.LOGICALOPERATION.name());
+		//"A & B"
+		
+		//Echo the predicate to the user
+		response.setContentType("text/html");
+		PrintWriter writer = response.getWriter();
+		writer.append("<!DOCTYPE html>")
+			.append("<html>")
+			.append("	<p>You typed: " + logicalOperation + "</p>")
+			.append("</html>");
+		
 	
 		//Parse it into a structure that separates boolean variables and logical operators
 		// var array = logicalOperation.split(" ") //split by space "A & B -> [A,&,B]"
@@ -43,24 +55,24 @@ public class Assignment5 extends HttpServlet{
 		//get & into its own array
 		// opIndex > -1 ? array.splice(myIndex, 1) : false //removes & from array
 		
-		//Echo the predicate to the user
+		
 		//print the predicate they enetered
 		
 		//Print a complete truth table for the predicate, including a column with the result for each row
 		//for loop for table size look online
 		
 		// change these variables
-		Float rslt = (float) 0.0;
-		Float lhsVal;
-		Float rhsVal;
-		String operation = "";
-		String lhsStr = "LHS";
-		String rhsStr = "RHS";
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		PrintHead(out);
-		PrintBody(out, lhsStr, rhsStr, rslt.toString());
-		PrintTail(out);
+// 		Float rslt = (float) 0.0;
+// 		Float lhsVal;
+// 		Float rhsVal;
+// 		String operation = "";
+// 		String lhsStr = "LHS";
+// 		String rhsStr = "RHS";
+// 		response.setContentType("text/html");
+// 		PrintWriter out = response.getWriter();
+// 		PrintHead(out);
+// 		PrintBody(out, lhsStr, rhsStr, rslt.toString());
+// 		PrintTail(out);
 	}
 	
 	/** *****************************************************
@@ -125,7 +137,7 @@ public class Assignment5 extends HttpServlet{
 		out.println("    <form method=\"post\" action=\"\\assignment5\">");
 		out.println("        <center>");
 		out.println("            <label for=\"logicalOperation\">Enter Logical Operation:</label>");
-		out.println("            <input type=\"text\" id=\"logicalOperation\" name=\"logicalOperation\"><br><br>");
+		out.println("            <input type=\"text\" id=\"logicalOperation\" name=\"LOGICALOPERATION\"><br><br>");
 		out.println("            <input type=\"submit\" value=\"Submit\" style=\"background-color: #80ced6\">");
 		out.println("        </center>");
 		out.println("    </form>");
