@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.WebServlet;
 @WebServlet( name = "assignment5", urlPatterns = {"/assignment5"} )
 
-public class assignment5 extends HttpServlet{
+public class Assignment5 extends HttpServlet{
 	// Location of servlet.
 	static String Domain  = "";
 	static String Path    = "";
