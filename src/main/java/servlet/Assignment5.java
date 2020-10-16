@@ -43,7 +43,7 @@ public class Assignment5 extends HttpServlet{
 		
 		
 		//Parse it into a structure that separates boolean variables and logical operators
-		var arrayVars = logicalOperation.split(" "); //split by space "A & B -> [A,&,B]"
+		String[] arrayVars = logicalOperation.split(" "); //split by space "A & B -> [A,&,B]"
 		ArrayList arrayOps = new ArrayList();
 		// var opIndex = array.indexOf("&") //get index of operators
 		//get & into its own array
