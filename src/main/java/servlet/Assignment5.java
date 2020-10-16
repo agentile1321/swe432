@@ -1,6 +1,7 @@
 
 import java.io.PrintWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -43,7 +44,7 @@ public class Assignment5 extends HttpServlet{
 		
 		//Parse it into a structure that separates boolean variables and logical operators
 		var arrayVars = logicalOperation.split(" "); //split by space "A & B -> [A,&,B]"
-		var arrayOps = [];
+		ArrayList<Type> arrayOps = new ArrayList<Type>();
 		// var opIndex = array.indexOf("&") //get index of operators
 		//get & into its own array
 		// opIndex > -1 ? array.splice(myIndex, 1) : false //removes & from array
