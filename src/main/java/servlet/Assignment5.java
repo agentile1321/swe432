@@ -171,7 +171,7 @@ public class Assignment5 extends HttpServlet{
 	
 	
 	
-	private void PrintResponseBody (PrintWriter out, String lhs, String rhs, String rslt)
+	private void PrintResponseBody (PrintWriter out)
 	{
 		out.println("<body>");
 		out.println("    <h1><center>Predicate Logic Calculator</center></h1>");
