@@ -15,8 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.WebServlet;
 @WebServlet( name = "assignment5", urlPatterns = {"/assignment5"} )
 
-public class Assignment5 extends HttpServlet{
-	static enum Data {LOGICALOPERATION};
+
+public class assignment5 extends HttpServlet{
+	static enum Data {LOGICALOPERATION, DISPLAY};
 	
 	// Location of servlet.
 	static String Domain  = "";
@@ -45,41 +46,69 @@ public class Assignment5 extends HttpServlet{
 		
 		//get vars
 		String logicalOperation = request.getParameter(Data.LOGICALOPERATION.name()); //"A & B"
+		String displaySelection = request.getParameter(Data.DISPLAY.name()); //"TRUE/FALSE"
+		//ArrayList<String> displayOptions = new ArrayList(Arrays.asList(displaySelection.split("/"))); //split by /
 		
 		//Parse it into a structure that separates boolean variables and logical operators
-		ArrayList legalOps = new ArrayList(Arrays.asList("&&", "AND", "&", "^", "||", "|", "OR", "V", "~", "NOT", "!", "==", "=", "EQUAL"));
-		ArrayList arrayVars = new ArrayList(Arrays.asList(logicalOperation.split(" "))); //split by space "A & B -> [A,&,B]"
-		ArrayList arrayOps = new ArrayList();
-		boolean makeTable = true;
-		int length = 0;
-		int width = 0;
+		 ArrayList legalOps = new ArrayList(Arrays.asList("&&", "AND", "&","*", "^", "+", "||", "|", "OR", "V", "~", "NOT", "!", "==", "=", "EQUAL"));
+	     ArrayList arrayEq = new ArrayList(Arrays.asList(logicalOperation.split(" "))); //split by space "A & B -> [A,&,B]"
+	     ArrayList arrayOps = new ArrayList();
+	     
+	     ArrayList<EquationVariables> variableArray = new ArrayList<>();
+	 	 ArrayList<Object> equationArray = new ArrayList<>();
+	 	 String[][] Table = null;
+	 	boolean makeTable = true;
+	     
+	     //loops through the equation and stores all variables in a variable array.
+	     for(int i = 0; i< arrayEq.size(); i++){
+	    	 if(!(legalOps.contains(arrayEq.get(i)))){
+	    		 boolean alreadyExists = false; //Keeps track of duplicate variables
+	    		 EquationVariables temp = new EquationVariables((String)arrayEq.get(i),true);
+	    		 
+	    		//checks for duplicate variables and doesn't add them to the array twice
+				for (EquationVariables v : variableArray){
+					if (v.getName()==temp.getName()){
+						alreadyExists = true;
+						temp = v;
+					}
+				}
+				if (!alreadyExists){
+					variableArray.add(temp); 
+				}
+				//stores the variable objects that are created in an equation array as well
+				equationArray.add(temp);
+	    	 }else {
+	    		 // Operators get stored in an equation array
+	    		 equationArray.add(arrayEq.get(i));
+	    	 }
+	     }
+	     
+	     //Creates an instance of the truth table with the proper parameters
+	     if (variableArray.size() > 0){
+	    	 Table = TruthTable(variableArray, equationArray);
+	    	 // check if Final input has error
+	    	 if (Table[Table.length - 1][Table[Table.length-1].length - 1] == "E") {
+	    		 makeTable = false;makeTable = false;
+	    	 }
+	     }
 		
-		//loop through predicate to seperate operations
-		for(int i = 0; i< arrayVars.size(); i++){
-			if(legalOps.contains(arrayVars.get(i))){
-				arrayOps.add(arrayVars.get(i));
-				arrayVars.set(i, null); //set to null instead of removing to avoid indexing errors in the loop
-			}	
-		}
+		//remove nulls from arrayEq
+		arrayEq.removeAll(Collections.singleton(null)); //now we have two array lists {A, B} and {&}
 		
-		//remove nulls from arrayVars
-		arrayVars.removeAll(Collections.singleton(null)); //now we have two array lists {A, B} and {&}
-		
-		
-		//check if invalid
-		if (arrayOps.size() == 0){
-			makeTable = false; //if maketable is false print out message (invalid predicate)
-		}
-		
-		//get table dimensions
-		length = (int) Math.pow(2, arrayVars.size());
-		width = arrayVars.size();
-		
-		
-		//print the predicate they enetered
-		
+		//print the predicate they entered
 		//Print a complete truth table for the predicate, including a column with the result for each row
 		//for loop for table size look online
+		
+		// Change Display Feature
+		String t = "1"; // Default setting
+		String f = "0";
+	    String[][] temp = Table;
+	    //if (displayOptions.size() > 0) {
+	    //	t = displayOptions.get(0);
+	    //	f = displayOptions.get(1);
+	    //}
+
+		changeDisplay(t, f, temp);
 		
 		//Echo the predicate to the user
 		response.setContentType("text/html");
@@ -90,54 +119,165 @@ public class Assignment5 extends HttpServlet{
 			.append("<html>")
 			.append("	<center>You typed: " + logicalOperation + "</center>")
 			.append("</html>");
-						
 		
-		//IF BOOL MAKETABLE TRUE DO THIS
-		for (int i=0; i<length; i++) {
-			writer.append("<center>");
-			for (int j=width; j>=0; j--) {
-// 				if(j == 0){
-// 					writer.append("| " +  (i/(int) Math.pow(2, j))%2);
-// 					continue;
-// 				}
-				writer.append("| " +  (i/(int) Math.pow(2, j))%2);
+		// Print Table
+		if (makeTable) {
+			for (int i = 0; i < Table.length; i++) {
+				writer.append("<center>");
+				for (int j = 0; j < Table[i].length; j++) {
+					writer.append(Table[i][j] + "|");
+					//System.out.print();
+				}
+				writer.append("</center>");
+				//System.out.println();
 			}
-			//System.out.println();
-			writer.append("</center>");
 		}
+		else{
+			writer.append("<center> INVALID EQUATION!!! </center>");
+		}	
+	  }
 
+	/**
+	 * The method that constructs the truth table
+	 * It goes through every possible binary combination for the variables, and calls parseEquation()
+	 * for each one. If parseEquation returns false, the program stops executing
+	 */
+	private static String[][] TruthTable(ArrayList<EquationVariables> variables, ArrayList<Object> equation) {
+		int width = variables.size();
+		int length = (int) Math.pow(2, width);
+		String[][] table = new String[length+1][width+2];
+		table[0][0] = "Rows";
 		
+		//prints out the top row of the truth table
+		for (int i = 0; i < variables.size(); i++){
+			table[0][i+1] = variables.get(i).getName();
+			System.out.print(" | " + variables.get(i).getName());
+		}
+		table[0][width+1] = "Result";
 		
-		
-		PrintResponseBodyEnd(writer);
-		
-	
-		//Parse it into a structure that separates boolean variables and logical operators
-		// var array = logicalOperation.split(" ") //split by space "A & B -> [A,&,B]"
-		// var opIndex = array.indexOf("&") //get index of operators
-		//get & into its own array
-		// opIndex > -1 ? array.splice(myIndex, 1) : false //removes & from array
-		
-		
-		//print the predicate they enetered
-		
-		//Print a complete truth table for the predicate, including a column with the result for each row
-		//for loop for table size look online
-		
-		// change these variables
-// 		Float rslt = (float) 0.0;
-// 		Float lhsVal;
-// 		Float rhsVal;
-// 		String operation = "";
-// 		String lhsStr = "LHS";
-// 		String rhsStr = "RHS";
-// 		response.setContentType("text/html");
-// 		PrintWriter out = response.getWriter();
-// 		PrintHead(out);
-// 		PrintBody(out, lhsStr, rhsStr, rslt.toString());
-// 		PrintTail(out);
+		for (int i=1; i<length+1; i++) {
+			String value = "";
+			String row = i + ".";
+			table[i][0] = row;
+			for (int j=width-1; j>=0; j--) {
+				int v = (i-1)/(int) Math.pow(2, j)%2;
+				if (v == 1){
+					variables.get(j).setState(true);
+					table[i][j+1] = "1";
+	            }
+				else {
+					variables.get(j).setState(false);
+					table[i][j+1] = "0";
+				}
+				//writer.append(row);
+			}
+			// Calculate current state of equation
+			value = calculateBoolean(equation);
+			table[i][width+1] = value;		
+		}
+		return table;
 	}
 	
+	private static String calculateBoolean(ArrayList<Object> equation) {
+		ArrayList AND = new ArrayList(Arrays.asList("&&", "AND", "&", "*"));
+		ArrayList OR = new ArrayList(Arrays.asList("+", "^", "||", "|", "OR", "V"));
+		ArrayList NOT = new ArrayList(Arrays.asList("~", "NOT", "!"));
+		ArrayList<Object> temp = new ArrayList<>(equation);
+		String result = "E";
+		// change boolean values to ints
+		for (int j = 0; j < temp.size();j++){
+			if (temp.get(j).getClass().equals(EquationVariables.class)){
+				temp.set(j, ((EquationVariables)temp.get(j)).getState() ? 1 : 0);
+			}
+		}
+		for (int i = 0; i < temp.size(); i++){
+			if (temp.get(i).getClass().equals(String.class)){
+				// check is eligible for NOT operation
+				if ((NOT.contains(temp.get(i))) && (temp.get(i+1).getClass().equals(Integer.class))){
+					invertVal(i+1, temp);
+					//System.out.println("NOT check:" + temp);
+				}else if ((!(i == 0) && !(i == temp.size()-1)) && (temp.get(i-1).getClass().equals(Integer.class))){
+					if ((temp.get(i+1).getClass().equals(Integer.class))){
+						if (OR.contains(temp.get(i))){
+							orValues(i-1, i+1, temp);
+							//System.out.println("OR check:" + temp);
+						}else if (AND.contains(temp.get(i))){
+							andValues(i-1, i+1, temp);
+							//System.out.println("AND check:" + temp);
+						}
+					}else if (NOT.contains(temp.get(i+1)) && (temp.get(i+2).getClass().equals(Integer.class))){
+						invertVal(i+2,temp);
+						if (OR.contains(temp.get(i))){
+							orValues(i-1, i+2, temp);
+						}else if (AND.contains(temp.get(i))){
+							andValues(i-1, i+2, temp);
+						}
+						temp.set(i+1, "");
+					}else{
+						System.out.println("Invalid String");
+						return result;
+					}
+				}else {
+					System.out.println("Invalid String");
+					return result;
+				}
+			//If two integers are next to each other, end the program for an improper equation
+			}else if (temp.get(i).getClass().equals(Integer.class) && i < temp.size()-1 && temp.get(i+1).getClass().equals(Integer.class)){
+				return result;
+			}
+		}
+		result = temp.get(temp.size()-1).toString();
+		return result;
+	}
+	
+	public static void invertVal(int pos, ArrayList<Object> temp){
+		if ((Integer)temp.get(pos)==0){
+			temp.set(pos, 1);
+		}else{
+			temp.set(pos, 0);
+		}
+	}
+	
+	public static void orValues(int leftPos, int rightPos,  ArrayList<Object> temp){
+		if ((Integer)temp.get(leftPos) == 1 || (Integer) temp.get(rightPos) == 1){
+			temp.set(rightPos, 1);
+		}else{
+			temp.set(rightPos, 0);
+		}
+	}
+	
+	public static void andValues(int leftPos, int rightPos,  ArrayList<Object> temp){
+		if ((Integer) temp.get(leftPos) == 1 && ((Integer) temp.get(rightPos)) == 1){
+			temp.set(rightPos, 1);
+		}else{
+			temp.set(rightPos, 0);
+		}
+	}
+	
+	public static void changeDisplay(String t, String f, String[][] table) {
+		for (int i = 0; i < table.length; i++) {
+			for (int j = 0; j < table[i].length; j++) {
+				if (table[i][j].equals("1")) {
+					table[i][j] = t;
+				}
+				else if(table[i][j].equals("0"))
+				{ 
+					table[i][j] = f;
+				}
+			}
+		}
+	}
+	
+	public static void printTable(String[][] table) {
+		for (int i = 0; i < table.length; i++) {
+			for (int j = 0; j < table[i].length; j++) {
+				System.out.print(table[i][j] + "|");
+			}
+			System.out.println();
+		}
+	}
+
+
 	/** *****************************************************
 	 *  Overrides HttpServlet's doGet().
 	 *  Prints an HTML page with a blank form.
@@ -182,21 +322,33 @@ public class Assignment5 extends HttpServlet{
 		out.println("    <h4><center>In order to calculate the final value of the logical operation, type in the predicate with the following constraints:</center></h4>");
 		out.println("");
 		out.println("    <ul>");
-		out.println("        <li>The entry should be typed in the format of (TRUE/FALSE)(LOGICAL OPERATOR)(TRUE/FALSE)</li>");
+		out.println("        <li>The entry should be typed in the format of (Variable A)(LOGICAL OPERATOR)(Variable B)</li>");
 		out.println("        <li>");
-		out.println("            The entry can also be an extention of the format described above. There can be multiple True/False statements with logical operations in between them. For example, you can enter");
-		out.println("            \"TRUE OR FALSE\",which would give you TRUE, and you could also enter \"FALSE AND(FALSE AND TRUE)\", which would result in False.");
+		out.println("            The entry can also be an extention of the format described above. There can be multiple Variables with logical operations in between them. For example, you can enter");
+		out.println("            \"Apple OR Orange\",which would give you its Truth Table Values.");
+		out.println("            Variables can be any letter or Name. Each Variable and Operand must be separated by a space.");
 		out.println("        </li>");
 		out.println("    </ul>");
 		out.println("    <h4><center>Options for supported logical symbols:</center></h4>");
 		out.println("    <ul>");
-		out.println("        <li>Supported symbols for AND: \"&&\", \"AND\", \"&\", \"^\"</li>");
-		out.println("        <li>Supported symbols for OR: \"||\", \"|\", OR, \"V\" </li>");
+		out.println("        <li>Supported symbols for AND: \"&&\", \"AND\", \"&\", \"^\", \"*\"</li>");
+		out.println("        <li>Supported symbols for OR: \"||\", \"|\", OR, \"V\", \"+\" </li>");
 		out.println("        <li>Supported symbols for NOT: \"~\", \"NOT\", \"!\"</li>");
 		out.println("        <li>Supported symbols for EQUAL: \"==\", \"=\", \"EQUAL\"</li>");
 		out.println("    </ul>");
 		out.println("    <br />    <br />    <br />");
 		out.println("");
+		out.println("    <form method=\"display\" action=\"\\assignment5\">");
+		out.println("        <center>");
+		out.println("			<select name=DISPLAY>");
+		out.println("		  	<option value=1/0 selected=selected>1/0</option>");
+		out.println("			<option value=T/F>T/F</option>");
+		out.println("			<option value=t/f>t/f</option>");
+		out.println("			<option value=X/O>X/O</option>");
+		out.println("			<option value=TRUE/FALSE>TRUE/FALSE</option>");
+		out.println("		</select>");
+		out.println("		</center>");
+		out.println("	 </form>");
 		out.println("    <form method=\"post\" action=\"\\assignment5\">");
 		out.println("        <center>");
 		out.println("            <label for=\"logicalOperation\">Enter Logical Operation:</label>");
@@ -205,7 +357,6 @@ public class Assignment5 extends HttpServlet{
 		out.println("        </center>");
 		out.println("    </form>");
 		out.println("</body>");
-		out.println("");
 		out.println("");
 		
 	}
@@ -240,21 +391,33 @@ public class Assignment5 extends HttpServlet{
 		out.println("    <h4><center>In order to calculate the final value of the logical operation, type in the predicate with the following constraints:</center></h4>");
 		out.println("");
 		out.println("    <ul>");
-		out.println("        <li>The entry should be typed in the format of (TRUE/FALSE)(LOGICAL OPERATOR)(TRUE/FALSE)</li>");
+		out.println("        <li>The entry should be typed in the format of (Variable A)(LOGICAL OPERATOR)(Variable B)</li>");
 		out.println("        <li>");
-		out.println("            The entry can also be an extention of the format described above. There can be multiple True/False statements with logical operations in between them. For example, you can enter");
-		out.println("            \"TRUE OR FALSE\",which would give you TRUE, and you could also enter \"FALSE AND(FALSE AND TRUE)\", which would result in False.");
+		out.println("            The entry can also be an extention of the format described above. There can be multiple Variables with logical operations in between them. For example, you can enter");
+		out.println("            \"Apple OR Orange\",which would give you its Truth Table Values.");
+		out.println("            Variables can be any letter or Name. Each Variable and Operand must be separated by a space.");
 		out.println("        </li>");
 		out.println("    </ul>");
 		out.println("    <h4><center>Options for supported logical symbols:</center></h4>");
 		out.println("    <ul>");
-		out.println("        <li>Supported symbols for AND: \"&&\", \"AND\", \"&\", \"^\"</li>");
-		out.println("        <li>Supported symbols for OR: \"||\", \"|\", OR, \"V\" </li>");
+		out.println("        <li>Supported symbols for AND: \"&&\", \"AND\", \"&\", \"^\", \"*\"</li>");
+		out.println("        <li>Supported symbols for OR: \"||\", \"|\", OR, \"V\", \"+\" </li>");
 		out.println("        <li>Supported symbols for NOT: \"~\", \"NOT\", \"!\"</li>");
 		out.println("        <li>Supported symbols for EQUAL: \"==\", \"=\", \"EQUAL\"</li>");
 		out.println("    </ul>");
 		out.println("    <br />    <br />    <br />");
 		out.println("");
+		out.println("    <form method=\"display\" action=\"\\assignment5\">");
+		out.println("        <center>");
+		out.println("			<select name=DISPLAY>");
+		out.println("		  	<option value=1/0 selected=selected>1/0</option>");
+		out.println("			<option value=T/F>T/F</option>");
+		out.println("			<option value=t/f>t/f</option>");
+		out.println("			<option value=X/O>X/O</option>");
+		out.println("			<option value=TRUE/FALSE>TRUE/FALSE</option>");
+		out.println("		</select>");
+		out.println("		</center>");
+		out.println("	 </form>");
 		out.println("    <form method=\"post\" action=\"\\assignment5\">");
 		out.println("        <center>");
 		out.println("            <label for=\"logicalOperation\">Enter Logical Operation:</label>");
@@ -272,9 +435,39 @@ public class Assignment5 extends HttpServlet{
 		out.println("");
 		
 	}
-	
-	
-	
-	
 
+}
+
+class EquationVariables {
+	
+	private boolean state;
+	private String name;
+	
+	/**
+	 * Stores variables with a name and a binary state (1 or 0)
+	 */
+	public EquationVariables(String theName, boolean theState){
+		name = theName;
+		state = theState;
+	}
+	
+	// Returns the binary state 
+	public boolean getState(){
+		return state;
+	}
+	
+	// Returns the name 
+	public String getName(){
+		return name;
+	}
+
+	public void setState(boolean b){
+		state = b;	
+	}
+	
+	@Override
+	public String toString() {
+		return ("Variable: " + this.getName()+ " Value: " + this.getState());
+	}
+		
 }
