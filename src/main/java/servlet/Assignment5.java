@@ -46,7 +46,8 @@ public class Assignment5 extends HttpServlet{
 		
 		//get vars
 		String logicalOperation = request.getParameter(Data.LOGICALOPERATION.name()); //"A & B"
-		String displaySelection = request.getParameter(Data.DISPLAY.name()); //"TRUE/FALSE"
+		//String displaySelection = request.getParameter(Data.DISPLAY.name()); //"TRUE/FALSE"
+		String displaySelection = (request.getElementById("DISPLAY")).value;
 		//ArrayList<String> displayOptions = new ArrayList(Arrays.asList(displaySelection.split("/"))); //split by /
 		
 		//Parse it into a structure that separates boolean variables and logical operators
@@ -340,7 +341,7 @@ public class Assignment5 extends HttpServlet{
 		out.println("");
 		out.println("    <form method=\"display\" action=\"\\assignment5\">");
 		out.println("        <center>");
-		out.println("			<select name=DISPLAY>");
+		out.println("			<select id=DISPLAY>");
 		out.println("		  	<option value=1/0 selected=selected>1/0</option>");
 		out.println("			<option value=T/F>T/F</option>");
 		out.println("			<option value=t/f>t/f</option>");
@@ -409,7 +410,7 @@ public class Assignment5 extends HttpServlet{
 		out.println("");
 		out.println("    <form method=\"display\" action=\"\\assignment5\">");
 		out.println("        <center>");
-		out.println("			<select name=DISPLAY>");
+		out.println("			<select name=DISPLAY>");
 		out.println("		  	<option value=1/0 selected=selected>1/0</option>");
 		out.println("			<option value=T/F>T/F</option>");
 		out.println("			<option value=t/f>t/f</option>");
