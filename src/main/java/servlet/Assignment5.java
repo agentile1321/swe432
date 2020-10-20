@@ -337,7 +337,7 @@ public class Assignment5 extends HttpServlet{
 		out.println("");
 		out.println("    <form method=\"display\" action=\"\\assignment5\">");
 		out.println("        <center>");
-		out.println("			<select id=DISPLAY>");
+		out.println("			<select name=\"DISPLAY\">");
 		out.println("		  	<option value=1/0 selected=selected>1/0</option>");
 		out.println("			<option value=T/F>T/F</option>");
 		out.println("			<option value=t/f>t/f</option>");
