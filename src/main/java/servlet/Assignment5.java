@@ -39,15 +39,12 @@ public class Assignment5 extends HttpServlet{
 	public void doPost (HttpServletRequest request, HttpServletResponse response)
 	   throws ServletException, IOException
 	{
-		//THINGS NEED TO BE DONE
-		//COMPETION OF TRUTH TABLE
-		//CHECK FOR VALID INPUT PREDICATE AND PRINT MESSAGE TO USER
 		
 		
 		//get vars
 		String logicalOperation = request.getParameter(Data.LOGICALOPERATION.name()); //"A & B"
 		String displaySelection = request.getParameter(Data.DISPLAY.name()); //"TRUE/FALSE"
-		//ArrayList<String> displayOptions = new ArrayList(Arrays.asList(displaySelection.split("/"))); //split by /
+		ArrayList<String> displayOptions = new ArrayList(Arrays.asList(displaySelection.split("/"))); //split by /
 		
 		//Parse it into a structure that separates boolean variables and logical operators
 		 ArrayList legalOps = new ArrayList(Arrays.asList("&&", "AND", "&","*", "^", "+", "||", "|", "OR", "V", "~", "NOT", "!", "==", "=", "EQUAL"));
@@ -100,8 +97,8 @@ public class Assignment5 extends HttpServlet{
 		//for loop for table size look online
 		
 		// Change Display Feature
-		String t = "1"; // Default setting
-		String f = "0";
+		String t = displayOptions.get(0); //"1"; // Default setting
+		String f = displayOptions.get(1);//"0";
 	    String[][] temp = Table;
 	    //if (displayOptions.size() > 0) {
 	    //	t = displayOptions.get(0);
