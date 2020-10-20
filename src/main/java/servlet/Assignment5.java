@@ -16,7 +16,7 @@ import javax.servlet.annotation.WebServlet;
 @WebServlet( name = "assignment5", urlPatterns = {"/assignment5"} )
 
 
-public class assignment5 extends HttpServlet{
+public class Assignment5 extends HttpServlet{
 	static enum Data {LOGICALOPERATION, DISPLAY};
 	
 	// Location of servlet.
