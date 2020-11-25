@@ -540,7 +540,7 @@ public class assignment8a extends HttpServlet{
 	private void PrintBody (PrintWriter out, String lhs, String rhs, String rslt)
 	{
 		out.println("<body onLoad=\"setFocus()\">");
-		out.println("    <h1><center>Predicate Logic Calculator</center></h1>");
+		out.println("    <h1><center>Predicate Logic Calculator 8a</center></h1>");
 		out.println("    <h2><center>Sonal Kumar * Angela Gentile * George Terziysky * SWE-432-001</center>  </h2>");
 		out.println("	 <h3><center>Formatting/Syntax Instructions:</center></h3>");
 		out.println("    <h4><center>In order to calculate the final value of the logical operation, type in the predicate with the following constraints:</center></h4>");
@@ -635,7 +635,7 @@ public class assignment8a extends HttpServlet{
 	private void PrintResponseBody (PrintWriter out)
 	{
 		out.println("<body onLoad=\"setFocus()\">");
-		out.println("    <h1><center>Predicate Logic Calculator</center></h1>");
+		out.println("    <h1><center>Predicate Logic Calculator 8a</center></h1>");
 		out.println("    <h2><center>Sonal Kumar * Angela Gentile * George Terziysky * SWE-432-001</center>  </h2>");
 		out.println("	 <h3><center>Formatting/Syntax Instructions:</center></h3>");
 		out.println("    <h4><center>In order to calculate the final value of the logical operation, type in the predicate with the following constraints:</center></h4>");
