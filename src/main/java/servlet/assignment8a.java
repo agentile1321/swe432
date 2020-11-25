@@ -39,8 +39,8 @@ import javax.xml.stream.events.XMLEvent;
 
 // adds servlet mapping annotation
 import javax.servlet.annotation.WebServlet;
-@WebServlet( name = "assignment8", urlPatterns = {"/assignment8"} )
-public class assignment8 extends HttpServlet{
+@WebServlet( name = "assignment8a", urlPatterns = {"/assignment8a"} )
+public class assignment8a extends HttpServlet{
 	static String Style ="https://www.cs.gmu.edu/~gterziys/public_html/style.css";
 	static enum Data {LOGICALOPERATION, ENTRY, ENTRIES};
 	
