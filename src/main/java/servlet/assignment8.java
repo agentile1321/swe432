@@ -232,7 +232,7 @@ public class assignment8 extends HttpServlet{
 	     ArrayList arrayEq = new ArrayList(Arrays.asList(logicalOperation.split(" "))); //split by space "A & B -> [A,&,B]"
 	     ArrayList arrayOps = new ArrayList();
 	     
-	     ArrayList<EquationVariables> variableArray = new ArrayList<>();
+	     ArrayList<EquationVariables1> variableArray = new ArrayList<>();
 	 	 ArrayList<Object> equationArray = new ArrayList<>();
 	 	 String[][] Table = null;
 	 	boolean makeTable = true;
@@ -241,10 +241,10 @@ public class assignment8 extends HttpServlet{
 	     for(int i = 0; i< arrayEq.size(); i++){
 	    	 if(!(legalOps.contains(arrayEq.get(i)))){
 	    		 boolean alreadyExists = false; //Keeps track of duplicate variables
-	    		 EquationVariables temp = new EquationVariables((String)arrayEq.get(i),true);
+	    		 EquationVariables1 temp = new EquationVariables1((String)arrayEq.get(i),true);
 	    		 
 	    		//checks for duplicate variables and doesn't add them to the array twice
-				for (EquationVariables v : variableArray){
+				for (EquationVariables1 v : variableArray){
 					if (v.getName()==temp.getName()){
 						alreadyExists = true;
 						temp = v;
@@ -359,7 +359,7 @@ public class assignment8 extends HttpServlet{
 	 * It goes through every possible binary combination for the variables, and calls parseEquation()
 	 * for each one. If parseEquation returns false, the program stops executing
 	 */
-	private static String[][] TruthTable(ArrayList<EquationVariables> variables, ArrayList<Object> equation) {
+	private static String[][] TruthTable(ArrayList<EquationVariables1> variables, ArrayList<Object> equation) {
 		int width = variables.size();
 		int length = (int) Math.pow(2, width);
 		String[][] table = new String[length+1][width+2];
@@ -403,8 +403,8 @@ public class assignment8 extends HttpServlet{
 		String result = "E";
 		// change boolean values to ints
 		for (int j = 0; j < temp.size();j++){
-			if (temp.get(j).getClass().equals(EquationVariables.class)){
-				temp.set(j, ((EquationVariables)temp.get(j)).getState() ? 1 : 0);
+			if (temp.get(j).getClass().equals(EquationVariables1.class)){
+				temp.set(j, ((EquationVariables1)temp.get(j)).getState() ? 1 : 0);
 			}
 		}
 		for (int i = 0; i < temp.size(); i++){
@@ -688,7 +688,7 @@ public class assignment8 extends HttpServlet{
 
 }
 
-class EquationVariables {
+class EquationVariables11 {
 	
 	private boolean state;
 	private String name;
@@ -696,7 +696,7 @@ class EquationVariables {
 	/**
 	 * Stores variables with a name and a binary state (1 or 0)
 	 */
-	public EquationVariables(String theName, boolean theState){
+	public EquationVariables11(String theName, boolean theState){
 		name = theName;
 		state = theState;
 	}
