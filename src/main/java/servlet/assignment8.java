@@ -688,7 +688,7 @@ public class assignment8 extends HttpServlet{
 
 }
 
-class EquationVariables11 {
+class EquationVariables1 {
 	
 	private boolean state;
 	private String name;
@@ -696,7 +696,7 @@ class EquationVariables11 {
 	/**
 	 * Stores variables with a name and a binary state (1 or 0)
 	 */
-	public EquationVariables11(String theName, boolean theState){
+	public EquationVariables1(String theName, boolean theState){
 		name = theName;
 		state = theState;
 	}
