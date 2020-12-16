@@ -47,98 +47,98 @@ public class FinalExam extends HttpServlet
         out.println ("<button id=\"buttonDescendingNumericSort\" style=\"padding:10px;\" onclick=\"numericDescendingSort()\">Descending Numeric Sort</button>");
         out.println ("<button id=\"buttonDuplicatesSort\" style=\"padding:10px;\" onclick=\"removeDuplicatesAndSort()\">Remove Duplicates and Sort</button>");
         out.println (" </span>");
-		out.println ("</span>");
-		out.println ("<br/><br/>");
-		out.println ("<span id=\"result\" style=\"width: 90%; float: left; margin-top:20px\"></span>");
-		out.println ("<script type=\"text/javascript\">");
-		out.println ("var resultTxt = '';");
-		out.println ("var inputTxt = '';");
-		out.println ("var inputArray = [];");
-		// function that sorts array in default alphabetical order
-		out.println ("function defaultSort() {");
-		//clean result variable
+	out.println ("</span>");
+	out.println ("<br/><br/>");
+	out.println ("<span id=\"result\" style=\"width: 90%; float: left; margin-top:20px\"></span>");
+	out.println ("<script type=\"text/javascript\">");
+	out.println ("var resultTxt = '';");
+	out.println ("var inputTxt = '';");
+	out.println ("var inputArray = [];");
+	// function that sorts array in default alphabetical order
+	out.println ("function defaultSort() {");
+	//clean result variable
         out.println ("resultTxt = '';");
-		//clean result output span
-		 out.println ("document.getElementById(\"result\").innerHTML = resultTxt;"); 
+	//clean result output span
+	out.println ("document.getElementById(\"result\").innerHTML = resultTxt;"); 
         out.println ("readInput();");
        
-		//javascript function for default sort
-		out.println (" var sortedArr = inputArray.sort();");
-		//concatinate output
+	//javascript function for default sort
+	out.println (" var sortedArr = inputArray.sort();");
+	//concatinate output
         out.println ("sortedArr.forEach(concatinateFunction);");
-		//remove last 2 character in the output string (, )
+	//remove last 2 characters in the output string (, )
         out.println ("var sortedResult = resultTxt.substring(0, resultTxt.length - 2);");
-		//print out result
+	//print out result
         out.println ("document.getElementById(\"result\").innerHTML = sortedResult;");
-		out.println ("}");
-		// function removes duplicates and  sorts in default alphabetical order
-		out.println ("function removeDuplicatesAndSort() {");
-		//clean result variable
+	out.println ("}");
+	// function removes duplicates and  sorts in default alphabetical order
+	out.println ("function removeDuplicatesAndSort() {");
+	//clean result variable
         out.println ("resultTxt = '';");
-		//clean result span
+	//clean result span
         out.println ("document.getElementById(\"result\").innerHTML = resultTxt;");
         out.println ("readInput();");
-		//sort array in default order
+	//sort array in default order
         out.println ("var sortedArr = inputArray.sort();");
-		//javascrip function removes duplicates
+	//javascrip function removes duplicates
         out.println ("var resultArr = sortedArr.filter(function(a, b) { return sortedArr.indexOf(a) === b; });");
-		//concatinate  result array to string
+	//concatinate result array to string
         out.println ("resultArr.forEach(concatinateFunction);");
-		//remove last 2 characters (, )
+	//remove last 2 characters (, )
         out.println ("var sortedResult = resultTxt.substring(0, resultTxt.length - 2);");
-		//print out resut
+	//print out result
         out.println ("document.getElementById(\"result\").innerHTML = sortedResult;");
-		out.println ("}");
-		//function reads input from the input box
-		out.println ("function readInput() {");
+	out.println ("}");
+	//function reads input from the input box
+	out.println ("function readInput() {");
         out.println ("inputTxt = document.getElementById(\"inputBox\").value;");
-		//convert everything to lower case for clean sort
+	//convert everything to lower case for clean sort
         out.println ("inputTxt = inputTxt.toLowerCase();");
-		//create array out of input string
+	//create array out of input string
         out.println ("var res = inputTxt.split(\",\");");
-		//remove extra empty spaces 
+	//remove extra empty spaces 
         out.println ("inputArray = res.map(str => str.trim());");
-		out.println ("}");
-		//function for  decending  alphabetical sort
-		out.println ("function descendingSort() {");
-		//clean result  variable
+	out.println ("}");
+	//function for  descending alphabetical sort
+	out.println ("function descendingSort() {");
+	//clean result variable
         out.println ("resultTxt = '';");
-		//clean last result form the screen
+	//clean last result form the screen
         out.println ("document.getElementById(\"result\").innerHTML = resultTxt;");
-		//read input from input box
+	//read input from input box
         out.println ("readInput();");
-		//first sort  array with default order
+	//first sort  array with default order
         out.println ("var sortedArr = inputArray.sort();");
-		//then reverse the array into descending order
+	//then reverse the array into descending order
         out.println ("var sortedArrReversed = sortedArr.reverse();");
-		//concatinate the result into the string
+	//concatinate the result into the string
         out.println ("sortedArrReversed.forEach(concatinateFunction);");
-		//remove last 2 characters
+	//remove last 2 characters
         out.println ("var sortedResult = resultTxt.substring(0, resultTxt.length - 2);");
-		//print out results
+	//print out results
         out.println ("document.getElementById(\"result\").innerHTML = sortedResult;");
-		out.println ("}");
-		//function for numeric sort ( ascending order)
-		out.println ("function numericDefaultSort() {");
-		//clean
+	out.println ("}");
+	//function for numeric sort (ascending order)
+	out.println ("function numericDefaultSort() {");
+	//clean
         out.println ("resultTxt = '';");
-		//clean last result from the screen
+	//clean last result from the screen
         out.println ("document.getElementById(\"result\").innerHTML = resultTxt;");
-		//read input
+	//read input
         out.println ("readInput();");
-		//javascript function converting array of strings to array of numbers
-		out.println ("var numericArray = inputArray.map(Number);");
-		// javascript function for numeric sort in ascending order
+	//javascript function converting array of strings to array of numbers
+	out.println ("var numericArray = inputArray.map(Number);");
+	// javascript function for numeric sort in ascending order
         out.println ("var sortedArr = numericArray.sort(function (a, b) { return a-b; });");
-		//concatinate the result into string 
+	//concatinate the result into string 
         out.println ("sortedArr.forEach(concatinateFunction);");
-		//remove last 2 characters
+	//remove last 2 characters
         out.println ("var sortedResult = resultTxt.substring(0, resultTxt.length - 2);");
-		//print out results
+	//print out results
         out.println ("document.getElementById(\"result\").innerHTML = sortedResult;");
-		out.println ("}");
-		// same as above but in descending order
-		out.println ("function numericDescendingSort() {");
+	out.println ("}");
+	// same as above but in descending order
+	out.println ("function numericDescendingSort() {");
         out.println ("resultTxt = '';");
         out.println ("document.getElementById(\"result\").innerHTML = resultTxt;");
         out.println ("readInput();");
@@ -147,12 +147,12 @@ public class FinalExam extends HttpServlet
         out.println ("sortedArr.forEach(concatinateFunction);");
         out.println ("var sortedResult = resultTxt.substring(0, resultTxt.length - 2);");
         out.println ("document.getElementById(\"result\").innerHTML = sortedResult;");
-		out.println ("}");
-		// function concatinates array into string, comma separated
-		out.println ("function concatinateFunction(value, index, array) {");
+	out.println ("}");
+	// function concatinates array into string, comma separated
+	out.println ("function concatinateFunction(value, index, array) {");
         out.println ("resultTxt = resultTxt + value + \", \";");
-		out.println ("}");
-		out.println ("</script>");
+	out.println ("}");
+	out.println ("</script>");
       
         out.println ("</BODY>");
 
