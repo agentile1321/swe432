@@ -35,16 +35,16 @@ public class HelloServlet extends HttpServlet
 
         out.println ("<h1>SWE 432 Final Exam </h1>");
         out.println ("<span style=\"width: 90%; align: left\">");
-        out.println ("<span>Please enter comma separated strings or numbers you would like to sort</span><br/>")
+        out.println ("<span>Please enter comma separated strings or numbers you would like to sort</span><br/>");
         out.println ("<input type=\"text\" id=\"inputBox\" name=\"inputBox\" style=\"align: left; width: 60%\"/> &nbsp;&nbsp;&nbsp;<button id=\"buttonSort\" onclick=\"defaultSort()\">Sort</button>");
         out.println ("</span>");
-        out.println ("<br /><br />);
+        out.println ("<br/><br />");
         out.println ("<span id=\"result\" style=\"width: 90%; align: left\"></span>");
         out.println ("<script type=\"text/javascript\">");
         out.println ("var resultTxt = \"\";");
         out.println ("function defaultSort() {");
         out.println ("document.getElementById(\"result\").innerHTML = \"\";");
-        out.println ("var str = document.getElementById(\"inputBox\").value;")
+        out.println ("var str = document.getElementById(\"inputBox\").value;");
         out.println ("var res = str.split(",");");
         out.println ("var trimedArr = res.map(str => str.trim());");
         out.println ("var sortedArr = trimedArr.sort();");
