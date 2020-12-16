@@ -57,7 +57,7 @@ public class HelloServlet extends HttpServlet
 
     out.println (" function concatinateFunction(value, index, array) {");
          out.println ("resultTxt = resultTxt + value + \", \";");
-    }
+     out.println ("}");
  out.println ("</script>");
       
         out.println ("</BODY>");
