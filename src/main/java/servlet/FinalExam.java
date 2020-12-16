@@ -34,11 +34,12 @@ public class FinalExam extends HttpServlet
        
 
         out.println ("<h1>SWE 432 Final Exam </h1>");
+	out.println ("<h2>Angela Gentile </h2>");
 
-		out.println ("<span style=\"width: 90%; float: left\">");
-		out.println ("<h4>Please enter comma separated strings or numbers you would like to sort</h4>");
-		out.println ("<input type=\"text\" id=\"inputBox\"  style=\"float: left;width: 60%;  padding:10px;border:2px;box-shadow:0 0 3px 4px rgba(0,0,0,0.06);\"/>");
-		out.println ("<br/><br/>");
+	out.println ("<span style=\"width: 90%; float: left\">");
+	out.println ("<h4>Please enter comma separated strings or numbers you would like to sort</h4>");
+	out.println ("<input type=\"text\" id=\"inputBox\"  style=\"float: left;width: 60%;  padding:10px;border:2px;box-shadow:0 0 3px 4px rgba(0,0,0,0.06);\"/>");
+	out.println ("<br/><br/>");
         out.println ("<span style=\"float: left; margin-top:15px\">");
         out.println ("<button id=\"buttonSort\" style=\"padding:10px;\" onclick=\"defaultSort()\">Default Sort</button>");
         out.println ("<button id=\"buttonDescendingSort\" style=\"padding:10px;\" onclick=\"descendingSort()\">Descending Sort</button>");
@@ -58,8 +59,9 @@ public class FinalExam extends HttpServlet
 		//clean result variable
         out.println ("resultTxt = '';");
 		//clean result output span
+		 out.println ("document.getElementById(\"result\").innerHTML = resultTxt;"); 
         out.println ("readInput();");
-        out.println ("document.getElementById(\"result\").innerHTML = resultTxt;"); 
+       
 		//javascript function for default sort
 		out.println (" var sortedArr = inputArray.sort();");
 		//concatinate output
