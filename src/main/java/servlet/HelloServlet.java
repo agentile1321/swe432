@@ -43,7 +43,8 @@ public class HelloServlet extends HttpServlet
         out.println ("<script type=\"text/javascript\">");
         out.println ("var resultTxt = \"\";");
         out.println ("function defaultSort() {");
-        out.println ("document.getElementById(\"result\").innerHTML = '';");
+         out.println ("resultTxt = \"\";");
+        out.println ("document.getElementById(\"result\").innerHTML = resultTxt;");
         out.println ("var str = document.getElementById(\"inputBox\").value;");
         out.println ("var res = str.split(\",\");");
         out.println ("var trimedArr = res.map(str => str.trim());");
